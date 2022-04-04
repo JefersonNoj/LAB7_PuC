@@ -9,12 +9,12 @@
 ### Memory Usage ###
  Intel Hex-file ranges:
   0h - 5h		(dist/default/production\LAB7_PuC.X.production.hex)
-  8h - A9h		(dist/default/production\LAB7_PuC.X.production.hex)
+  8h - EBh		(dist/default/production\LAB7_PuC.X.production.hex)
   4000h - 4007h		(dist/default/production\LAB7_PuC.X.production.hex)
   400Eh - 4011h		(dist/default/production\LAB7_PuC.X.production.hex)
  Unused ranges:
   6h - 7h
-  AAh - 3FFFh
+  ECh - 3FFFh
   4008h - 400Dh
 
 ### Hex Memory Map ###
@@ -34,7 +34,11 @@
 00000070 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00000080 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00000090 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-000000A0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- -- -- --
+000000A0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+000000B0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+000000C0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+000000D0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+000000E0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- --
 ----------------------------------------------------------
 00004000 | H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- -- -- -- H1 H1
 00004010 | H1 H1 -- -- -- -- -- -- -- -- -- -- -- -- -- --

@@ -32,9 +32,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define _XTAL_FREQ 4000000      // Establecer frecuencia del oscilador (4MHz)
 #define INC_B PORTBbits.RB0     // Asignar identificador a RB0
 #define DEC_B PORTBbits.RB1     // Asignar identificador a RB1
+
+uint8_t valor;
 
 // Prototipo de funciones
 void setup(void);
@@ -50,29 +51,43 @@ void __interrupt() isr (void){
         }
         INTCONbits.RBIF = 0;    // Limpiar bandera de interrupción del PORTB
     }
+    else if (INTCONbits.T0IF){  // Evaluar bandera de interrupción del TMR0
+        TMR0 = 206;             // Reiniciar TMR0
+        INTCONbits.T0IF = 0;    // Limpiar bandera de interrupción del TMR0
+        PORTC++;                // Incrementar PORTC
+    }
     return;
 }
 
 void setup(void){
     
-    ANSEL = 0;                 // Configurar I/O digitales
+    ANSEL = 0;                  // Configurar I/O digitales
     ANSELH = 0;
     
-    OSCCONbits.IRCF = 0b0110;   // FOSC: 4MHz
+    OSCCONbits.IRCF = 0b011;    // FOSC: 500kHz
     OSCCONbits.SCS = 1;         // Oscilador interno
     
     TRISA = 0;                  // PORTA como salida
     PORTA = 0;                  // Limpiar PORTA
+    TRISC = 0;                  // PORTC como salida
+    PORTC = 0;                  // Limpiar PORTC
     TRISBbits.TRISB0 = 1;       // RB0 como entrada
     TRISBbits.TRISB1 = 1;       // RB1 como entrada
     OPTION_REGbits.nRBPU = 0;   // Habilitar resistencias pull-up del PORTB
     WPUBbits.WPUB0 = 1;         // Habilitar pull_up para RB0
     WPUBbits.WPUB1 = 1;         // Habilitar pull_up para RB1 
     
+    OPTION_REGbits.T0CS = 0;    // Configurar reloj interno para TMR0
+    OPTION_REGbits.PSA = 0;     // Asignar prescaler al TMR0
+    OPTION_REGbits.PS = 0b111;  // Prescaler 1:256
+    TMR0 = 206;                 
+    
     INTCONbits.GIE = 1;         // Habilitar interrupciones globales
+    INTCONbits.T0IE = 1;        // Habilitar interrupción del TRM0
     INTCONbits.RBIE = 1;        // Habilitar interrupciones del PORTB
     IOCBbits.IOCB0 = 1;         // Habilitar interrpción On_change de RB0
     IOCBbits.IOCB1 = 1;         // Habilitar interrpción On_change de RB1
+    INTCONbits.T0IF = 0;        // Limpiar bandera de interrupción del TRM0
     INTCONbits.RBIF = 0;        // Limpiar bandera de interrupción del PORTB
 }
 

@@ -2834,6 +2834,7 @@ extern char * ftoa(float f, int * status);
 
 
 
+uint8_t valor;
 
 
 void setup(void);
@@ -2849,6 +2850,11 @@ void __attribute__((picinterrupt(("")))) isr (void){
         }
         INTCONbits.RBIF = 0;
     }
+    else if (INTCONbits.T0IF){
+        TMR0 = 206;
+        INTCONbits.T0IF = 0;
+        PORTC++;
+    }
     return;
 }
 
@@ -2857,21 +2863,30 @@ void setup(void){
     ANSEL = 0;
     ANSELH = 0;
 
-    OSCCONbits.IRCF = 0b0110;
+    OSCCONbits.IRCF = 0b011;
     OSCCONbits.SCS = 1;
 
     TRISA = 0;
     PORTA = 0;
+    TRISC = 0;
+    PORTC = 0;
     TRISBbits.TRISB0 = 1;
     TRISBbits.TRISB1 = 1;
     OPTION_REGbits.nRBPU = 0;
     WPUBbits.WPUB0 = 1;
     WPUBbits.WPUB1 = 1;
 
+    OPTION_REGbits.T0CS = 0;
+    OPTION_REGbits.PSA = 0;
+    OPTION_REGbits.PS = 0b111;
+    TMR0 = 206;
+
     INTCONbits.GIE = 1;
+    INTCONbits.T0IE = 1;
     INTCONbits.RBIE = 1;
     IOCBbits.IOCB0 = 1;
     IOCBbits.IOCB1 = 1;
+    INTCONbits.T0IF = 0;
     INTCONbits.RBIF = 0;
 }
 
