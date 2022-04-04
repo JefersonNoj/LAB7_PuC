@@ -34,11 +34,24 @@
 
 #define INC_B PORTBbits.RB0     // Asignar identificador a RB0
 #define DEC_B PORTBbits.RB1     // Asignar identificador a RB1
+#define TMR0_setup 246          // Asignar valor de reinicio para el TMR0 (206 para 100ms)
 
-uint8_t valor;
+uint8_t valor = 0;
+uint8_t selector = 0;
+uint8_t unidades = 0;
+uint8_t decenas = 0;
+uint8_t centenas = 0;
+uint8_t disp0 = 0;
+uint8_t disp1 = 0;
+uint8_t disp2 = 0;
+uint8_t valor_tabla = 0;
 
 // Prototipo de funciones
 void setup(void);
+void multiplexado(uint8_t select);
+void obtener_decimal(uint8_t value);
+void display_7seg(uint8_t  unit, uint8_t  dec, uint8_t  cen);
+void tabla_7seg(uint8_t decimal);
 
 // Interrupciones del PORTB
 void __interrupt() isr (void){
@@ -52,13 +65,17 @@ void __interrupt() isr (void){
         INTCONbits.RBIF = 0;    // Limpiar bandera de interrupción del PORTB
     }
     else if (INTCONbits.T0IF){  // Evaluar bandera de interrupción del TMR0
-        TMR0 = 206;             // Reiniciar TMR0
+        TMR0 = TMR0_setup;      // Reiniciar TMR0
         INTCONbits.T0IF = 0;    // Limpiar bandera de interrupción del TMR0
-        PORTC++;                // Incrementar PORTC
+        //PORTC++;              // Incrementar PORTC
+        selector++;             // Incremetnar variable selector
+        if (selector>2)         // Reiniciar dicha variable si es mayor que 2
+            selector = 0;
     }
     return;
 }
 
+// Función de configuraciones
 void setup(void){
     
     ANSEL = 0;                  // Configurar I/O digitales
@@ -71,6 +88,8 @@ void setup(void){
     PORTA = 0;                  // Limpiar PORTA
     TRISC = 0;                  // PORTC como salida
     PORTC = 0;                  // Limpiar PORTC
+    TRISD = 0;                  // PORTD como salida
+    PORTD = 0;                  // Limpiar PORTD
     TRISBbits.TRISB0 = 1;       // RB0 como entrada
     TRISBbits.TRISB1 = 1;       // RB1 como entrada
     OPTION_REGbits.nRBPU = 0;   // Habilitar resistencias pull-up del PORTB
@@ -80,7 +99,7 @@ void setup(void){
     OPTION_REGbits.T0CS = 0;    // Configurar reloj interno para TMR0
     OPTION_REGbits.PSA = 0;     // Asignar prescaler al TMR0
     OPTION_REGbits.PS = 0b111;  // Prescaler 1:256
-    TMR0 = 206;                 
+    TMR0 = TMR0_setup;                 
     
     INTCONbits.GIE = 1;         // Habilitar interrupciones globales
     INTCONbits.T0IE = 1;        // Habilitar interrupción del TRM0
@@ -89,11 +108,110 @@ void setup(void){
     IOCBbits.IOCB1 = 1;         // Habilitar interrpción On_change de RB1
     INTCONbits.T0IF = 0;        // Limpiar bandera de interrupción del TRM0
     INTCONbits.RBIF = 0;        // Limpiar bandera de interrupción del PORTB
+    return;
 }
 
+// Función principal
 void main (void){
     setup();                        
     while(1){
+        multiplexado(selector);     // Multiplexado de displays
+        valor = PORTA;              // Guardar el valor del contador en PORTA
+        obtener_decimal(valor);     // Obtener el decimal de dicho valor
+        display_7seg(unidades, decenas, centenas);  //Configurar valor del display
     }
     return;
 }
+
+// Función de multiplexado de displays
+void multiplexado(uint8_t selector){
+    PORTD = 0;                  // Apagar PORTD (apagar todos los displays)
+    switch(selector){           // Evaluar variable para determinar el display que debe encenderse
+        case 0:
+            PORTC = disp0;      // Mover el valor del display de unidades al PORTC
+            PORTDbits.RD0 = 1;  // Encedecer el display de unidades
+            break;
+        case 1:
+            PORTC = disp1;      // Mover el valor del display de decenas al PORTC
+            PORTDbits.RD1 = 1;  // Encender el display de decenas
+            break;
+        case 2:
+            PORTC = disp2;      // Mover el valor del display de centenas al PORTC
+            PORTDbits.RD2 = 1;  // Encender el display de centenas
+            break;
+        default:
+            PORTD = 0;          // Apagar todos los displays
+    }
+    return;
+}
+
+// Función para obtener el decimal del contador en PORTA
+void obtener_decimal(uint8_t valor){
+    centenas = 0;
+    decenas = 0;
+    unidades = 0;
+    if (valor >= 100){
+        centenas = valor/100;
+        valor = valor%100;
+    }
+    if (valor >= 10){
+        decenas = valor/10;
+        unidades = valor%10;
+    }
+    if (valor < 10)
+        unidades = valor;
+    return;
+}
+
+// Función para configurar el valor que debe tener cada display
+void display_7seg(uint8_t unidades, uint8_t decenas, uint8_t centenas){
+    tabla_7seg(unidades);           // Buscar valor de unidades en la tabla de 7 seg
+    disp0 = valor_tabla;            // Guardar valor equivalente en el display de unidades (0)
+    
+    tabla_7seg(decenas);            // Buscar valor de decenas en la tabla de 7 seg
+    disp1 = valor_tabla;            // Guardar valor equivalente en el display de decenas (1)
+    
+    tabla_7seg(centenas);           // Buscar valor de centenas en la tabla de 7 seg
+    disp2 = valor_tabla;            // Guardar valor equivalente en el display de centenas (2)
+    return;
+}
+
+void tabla_7seg(uint8_t  decimal){
+    switch(decimal){
+        case 0:
+            valor_tabla = 0b00111111;       // 0 en display 7 seg
+            break;
+        case 1:
+            valor_tabla = 0b00000110;       // 1 en display 7 seg
+            break;
+        case 2:
+            valor_tabla = 0b01011011;       // 2 en display 7 seg
+            break;
+        case 3:
+            valor_tabla = 0b01001111;       // 3 en display 7 seg
+            break;
+        case 4:
+            valor_tabla = 0b01100110;       // 4 en display 7 seg
+            break;
+        case 5:
+            valor_tabla = 0b01101101;       // 5 en display 7 seg
+            break;
+        case 6:
+            valor_tabla = 0b01111101;       // 6 en display 7 seg
+            break;
+        case 7:
+            valor_tabla = 0b00000111;       // 7 en display 7 seg
+            break;
+        case 8:
+            valor_tabla = 0b01111111;       // 8 en display 7 seg
+            break;
+        case 9:
+            valor_tabla = 0b01101111;       // 9 en display 7 seg
+            break;
+        default:
+            valor_tabla = 0b00000000;       // Display apagado
+            break;
+    }
+    return;
+}
+    

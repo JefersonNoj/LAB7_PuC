@@ -3,6 +3,10 @@
 [d edition pro ]
 [d chip 16F887 ]
 [d frameptr 0 ]
+"5 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c90\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+"5 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c90\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
 "10 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c90\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
 "4 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c90\common\Umul8_16.c
@@ -11,12 +15,20 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"44 C:\Users\usuario\Desktop\UVG\Semestre5\PrograMicros\Laboratorios\LAB7_PuC.X\mainL7.c
+"57 C:\Users\usuario\Desktop\UVG\Semestre5\PrograMicros\Laboratorios\LAB7_PuC.X\mainL7.c
 [v _isr isr `II(v  1 e 1 0 ]
-"62
+"79
 [v _setup setup `(v  1 e 1 0 ]
-"94
+"115
 [v _main main `(v  1 e 1 0 ]
+"127
+[v _multiplexado multiplexado `(v  1 e 1 0 ]
+"149
+[v _obtener_decimal obtener_decimal `(v  1 e 1 0 ]
+"167
+[v _display_7seg display_7seg `(v  1 e 1 0 ]
+"179
+[v _tabla_7seg tabla_7seg `(v  1 e 1 0 ]
 "60 C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\pic\include\proc\pic16f887.h
 [v _TMR0 TMR0 `VEuc  1 e 1 @1 ]
 "167
@@ -35,6 +47,20 @@
 [v _PORTBbits PORTBbits `VES63  1 e 1 @6 ]
 "291
 [v _PORTC PORTC `VEuc  1 e 1 @7 ]
+"353
+[v _PORTD PORTD `VEuc  1 e 1 @8 ]
+[s S226 . 1 `uc 1 RD0 1 0 :1:0 
+`uc 1 RD1 1 0 :1:1 
+`uc 1 RD2 1 0 :1:2 
+`uc 1 RD3 1 0 :1:3 
+`uc 1 RD4 1 0 :1:4 
+`uc 1 RD5 1 0 :1:5 
+`uc 1 RD6 1 0 :1:6 
+`uc 1 RD7 1 0 :1:7 
+]
+"370
+[u S235 . 1 `S226 1 . 1 0 ]
+[v _PORTDbits PORTDbits `VES235  1 e 1 @8 ]
 [s S22 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
@@ -52,7 +78,7 @@
 ]
 [u S36 . 1 `S22 1 . 1 0 `S31 1 . 1 0 ]
 [v _INTCONbits INTCONbits `VES36  1 e 1 @11 ]
-[s S129 . 1 `uc 1 PS 1 0 :3:0 
+[s S131 . 1 `uc 1 PS 1 0 :3:0 
 `uc 1 PSA 1 0 :1:3 
 `uc 1 T0SE 1 0 :1:4 
 `uc 1 T0CS 1 0 :1:5 
@@ -60,15 +86,15 @@
 `uc 1 nRBPU 1 0 :1:7 
 ]
 "1367
-[s S136 . 1 `uc 1 PS0 1 0 :1:0 
+[s S138 . 1 `uc 1 PS0 1 0 :1:0 
 `uc 1 PS1 1 0 :1:1 
 `uc 1 PS2 1 0 :1:2 
 ]
-[u S140 . 1 `S129 1 . 1 0 `S136 1 . 1 0 ]
-[v _OPTION_REGbits OPTION_REGbits `VES140  1 e 1 @129 ]
+[u S142 . 1 `S131 1 . 1 0 `S138 1 . 1 0 ]
+[v _OPTION_REGbits OPTION_REGbits `VES142  1 e 1 @129 ]
 "1417
 [v _TRISA TRISA `VEuc  1 e 1 @133 ]
-[s S108 . 1 `uc 1 TRISB0 1 0 :1:0 
+[s S110 . 1 `uc 1 TRISB0 1 0 :1:0 
 `uc 1 TRISB1 1 0 :1:1 
 `uc 1 TRISB2 1 0 :1:2 
 `uc 1 TRISB3 1 0 :1:3 
@@ -78,28 +104,30 @@
 `uc 1 TRISB7 1 0 :1:7 
 ]
 "1496
-[u S117 . 1 `S108 1 . 1 0 ]
-[v _TRISBbits TRISBbits `VES117  1 e 1 @134 ]
+[u S119 . 1 `S110 1 . 1 0 ]
+[v _TRISBbits TRISBbits `VES119  1 e 1 @134 ]
 "1541
 [v _TRISC TRISC `VEuc  1 e 1 @135 ]
-[s S80 . 1 `uc 1 SCS 1 0 :1:0 
+"1603
+[v _TRISD TRISD `VEuc  1 e 1 @136 ]
+[s S79 . 1 `uc 1 SCS 1 0 :1:0 
 `uc 1 LTS 1 0 :1:1 
 `uc 1 HTS 1 0 :1:2 
 `uc 1 OSTS 1 0 :1:3 
 `uc 1 IRCF 1 0 :3:4 
 ]
 "1883
-[s S86 . 1 `uc 1 . 1 0 :4:0 
+[s S85 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 IRCF0 1 0 :1:4 
 `uc 1 IRCF1 1 0 :1:5 
 `uc 1 IRCF2 1 0 :1:6 
 ]
-[u S91 . 1 `S80 1 . 1 0 `S86 1 . 1 0 ]
-[v _OSCCONbits OSCCONbits `VES91  1 e 1 @143 ]
-[s S155 . 1 `uc 1 WPUB 1 0 :8:0 
+[u S90 . 1 `S79 1 . 1 0 `S85 1 . 1 0 ]
+[v _OSCCONbits OSCCONbits `VES90  1 e 1 @143 ]
+[s S157 . 1 `uc 1 WPUB 1 0 :8:0 
 ]
 "2367
-[s S157 . 1 `uc 1 WPUB0 1 0 :1:0 
+[s S159 . 1 `uc 1 WPUB0 1 0 :1:0 
 `uc 1 WPUB1 1 0 :1:1 
 `uc 1 WPUB2 1 0 :1:2 
 `uc 1 WPUB3 1 0 :1:3 
@@ -108,12 +136,12 @@
 `uc 1 WPUB6 1 0 :1:6 
 `uc 1 WPUB7 1 0 :1:7 
 ]
-[u S166 . 1 `S155 1 . 1 0 `S157 1 . 1 0 ]
-[v _WPUBbits WPUBbits `VES166  1 e 1 @149 ]
-[s S181 . 1 `uc 1 IOCB 1 0 :8:0 
+[u S168 . 1 `S157 1 . 1 0 `S159 1 . 1 0 ]
+[v _WPUBbits WPUBbits `VES168  1 e 1 @149 ]
+[s S183 . 1 `uc 1 IOCB 1 0 :8:0 
 ]
 "2437
-[s S183 . 1 `uc 1 IOCB0 1 0 :1:0 
+[s S185 . 1 `uc 1 IOCB0 1 0 :1:0 
 `uc 1 IOCB1 1 0 :1:1 
 `uc 1 IOCB2 1 0 :1:2 
 `uc 1 IOCB3 1 0 :1:3 
@@ -122,24 +150,100 @@
 `uc 1 IOCB6 1 0 :1:6 
 `uc 1 IOCB7 1 0 :1:7 
 ]
-[u S192 . 1 `S181 1 . 1 0 `S183 1 . 1 0 ]
-[v _IOCBbits IOCBbits `VES192  1 e 1 @150 ]
+[u S194 . 1 `S183 1 . 1 0 `S185 1 . 1 0 ]
+[v _IOCBbits IOCBbits `VES194  1 e 1 @150 ]
 "3388
 [v _ANSEL ANSEL `VEuc  1 e 1 @392 ]
 "3450
 [v _ANSELH ANSELH `VEuc  1 e 1 @393 ]
-"94 C:\Users\usuario\Desktop\UVG\Semestre5\PrograMicros\Laboratorios\LAB7_PuC.X\mainL7.c
+"39 C:\Users\usuario\Desktop\UVG\Semestre5\PrograMicros\Laboratorios\LAB7_PuC.X\mainL7.c
+[v _valor valor `uc  1 e 1 0 ]
+"40
+[v _selector selector `uc  1 e 1 0 ]
+"41
+[v _unidades unidades `uc  1 e 1 0 ]
+"42
+[v _decenas decenas `uc  1 e 1 0 ]
+"43
+[v _centenas centenas `uc  1 e 1 0 ]
+"44
+[v _disp0 disp0 `uc  1 e 1 0 ]
+"45
+[v _disp1 disp1 `uc  1 e 1 0 ]
+"46
+[v _disp2 disp2 `uc  1 e 1 0 ]
+"47
+[v _valor_tabla valor_tabla `uc  1 e 1 0 ]
+"115
 [v _main main `(v  1 e 1 0 ]
 {
-"99
+"124
 } 0
-"62
+"79
 [v _setup setup `(v  1 e 1 0 ]
 {
-"92
+"112
 } 0
-"44
+"149
+[v _obtener_decimal obtener_decimal `(v  1 e 1 0 ]
+{
+[v obtener_decimal@valor valor `uc  1 a 1 wreg ]
+[v obtener_decimal@valor valor `uc  1 a 1 wreg ]
+[v obtener_decimal@valor valor `uc  1 a 1 7 ]
+"164
+} 0
+"5 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c90\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+{
+"10
+[v ___awmod@sign sign `uc  1 a 1 1 ]
+[v ___awmod@counter counter `uc  1 a 1 0 ]
+"5
+[v ___awmod@divisor divisor `i  1 p 2 3 ]
+[v ___awmod@dividend dividend `i  1 p 2 5 ]
+"34
+} 0
+"5 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c90\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+{
+"10
+[v ___awdiv@quotient quotient `i  1 a 2 2 ]
+"11
+[v ___awdiv@sign sign `uc  1 a 1 1 ]
+[v ___awdiv@counter counter `uc  1 a 1 0 ]
+"5
+[v ___awdiv@divisor divisor `i  1 p 2 3 ]
+[v ___awdiv@dividend dividend `i  1 p 2 5 ]
+"41
+} 0
+"127 C:\Users\usuario\Desktop\UVG\Semestre5\PrograMicros\Laboratorios\LAB7_PuC.X\mainL7.c
+[v _multiplexado multiplexado `(v  1 e 1 0 ]
+{
+[v multiplexado@selector selector `uc  1 a 1 wreg ]
+[v multiplexado@selector selector `uc  1 a 1 wreg ]
+[v multiplexado@selector selector `uc  1 a 1 5 ]
+"146
+} 0
+"167
+[v _display_7seg display_7seg `(v  1 e 1 0 ]
+{
+[v display_7seg@unidades unidades `uc  1 a 1 wreg ]
+[v display_7seg@unidades unidades `uc  1 a 1 wreg ]
+[v display_7seg@decenas decenas `uc  1 p 1 6 ]
+[v display_7seg@centenas centenas `uc  1 p 1 7 ]
+[v display_7seg@unidades unidades `uc  1 a 1 1 ]
+"177
+} 0
+"179
+[v _tabla_7seg tabla_7seg `(v  1 e 1 0 ]
+{
+[v tabla_7seg@decimal decimal `uc  1 a 1 wreg ]
+[v tabla_7seg@decimal decimal `uc  1 a 1 wreg ]
+[v tabla_7seg@decimal decimal `uc  1 a 1 5 ]
+"216
+} 0
+"57
 [v _isr isr `II(v  1 e 1 0 ]
 {
-"60
+"76
 } 0

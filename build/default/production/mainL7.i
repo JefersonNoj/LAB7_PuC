@@ -2834,10 +2834,23 @@ extern char * ftoa(float f, int * status);
 
 
 
-uint8_t valor;
+
+uint8_t valor = 0;
+uint8_t selector = 0;
+uint8_t unidades = 0;
+uint8_t decenas = 0;
+uint8_t centenas = 0;
+uint8_t disp0 = 0;
+uint8_t disp1 = 0;
+uint8_t disp2 = 0;
+uint8_t valor_tabla = 0;
 
 
 void setup(void);
+void multiplexado(uint8_t select);
+void obtener_decimal(uint8_t value);
+void display_7seg(uint8_t unit, uint8_t dec, uint8_t cen);
+void tabla_7seg(uint8_t decimal);
 
 
 void __attribute__((picinterrupt(("")))) isr (void){
@@ -2851,12 +2864,16 @@ void __attribute__((picinterrupt(("")))) isr (void){
         INTCONbits.RBIF = 0;
     }
     else if (INTCONbits.T0IF){
-        TMR0 = 206;
+        TMR0 = 246;
         INTCONbits.T0IF = 0;
-        PORTC++;
+
+        selector++;
+        if (selector>2)
+            selector = 0;
     }
     return;
 }
+
 
 void setup(void){
 
@@ -2870,6 +2887,8 @@ void setup(void){
     PORTA = 0;
     TRISC = 0;
     PORTC = 0;
+    TRISD = 0;
+    PORTD = 0;
     TRISBbits.TRISB0 = 1;
     TRISBbits.TRISB1 = 1;
     OPTION_REGbits.nRBPU = 0;
@@ -2879,7 +2898,7 @@ void setup(void){
     OPTION_REGbits.T0CS = 0;
     OPTION_REGbits.PSA = 0;
     OPTION_REGbits.PS = 0b111;
-    TMR0 = 206;
+    TMR0 = 246;
 
     INTCONbits.GIE = 1;
     INTCONbits.T0IE = 1;
@@ -2888,11 +2907,109 @@ void setup(void){
     IOCBbits.IOCB1 = 1;
     INTCONbits.T0IF = 0;
     INTCONbits.RBIF = 0;
+    return;
 }
+
 
 void main (void){
     setup();
     while(1){
+        multiplexado(selector);
+        valor = PORTA;
+        obtener_decimal(valor);
+        display_7seg(unidades, decenas, centenas);
+    }
+    return;
+}
+
+
+void multiplexado(uint8_t selector){
+    PORTD = 0;
+    switch(selector){
+        case 0:
+            PORTC = disp0;
+            PORTDbits.RD0 = 1;
+            break;
+        case 1:
+            PORTC = disp1;
+            PORTDbits.RD1 = 1;
+            break;
+        case 2:
+            PORTC = disp2;
+            PORTDbits.RD2 = 1;
+            break;
+        default:
+            PORTD = 0;
+    }
+    return;
+}
+
+
+void obtener_decimal(uint8_t valor){
+    centenas = 0;
+    decenas = 0;
+    unidades = 0;
+    if (valor >= 100){
+        centenas = valor/100;
+        valor = valor%100;
+    }
+    if (valor >= 10){
+        decenas = valor/10;
+        unidades = valor%10;
+    }
+    if (valor < 10)
+        unidades = valor;
+    return;
+}
+
+
+void display_7seg(uint8_t unidades, uint8_t decenas, uint8_t centenas){
+    tabla_7seg(unidades);
+    disp0 = valor_tabla;
+
+    tabla_7seg(decenas);
+    disp1 = valor_tabla;
+
+    tabla_7seg(centenas);
+    disp2 = valor_tabla;
+    return;
+}
+
+void tabla_7seg(uint8_t decimal){
+    switch(decimal){
+        case 0:
+            valor_tabla = 0b00111111;
+            break;
+        case 1:
+            valor_tabla = 0b00000110;
+            break;
+        case 2:
+            valor_tabla = 0b01011011;
+            break;
+        case 3:
+            valor_tabla = 0b01001111;
+            break;
+        case 4:
+            valor_tabla = 0b01100110;
+            break;
+        case 5:
+            valor_tabla = 0b01101101;
+            break;
+        case 6:
+            valor_tabla = 0b01111101;
+            break;
+        case 7:
+            valor_tabla = 0b00000111;
+            break;
+        case 8:
+            valor_tabla = 0b01111111;
+            break;
+        case 9:
+            valor_tabla = 0b01101111;
+            break;
+        default:
+            valor_tabla = 0b00000000;
+            break;
     }
     return;
 }
