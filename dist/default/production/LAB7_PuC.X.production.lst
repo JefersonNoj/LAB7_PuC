@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.35 build 20211206165544 
-                                                                                               Mon Apr 04 15:50:28 2022
+                                                                                               Wed Apr 06 17:46:44 2022
 
 Microchip MPLAB XC8 C Compiler v2.35 (Free license) build 20211206165544 Og1 
      1                           	processor	16F887
@@ -544,12 +544,12 @@ Microchip MPLAB XC8 C Compiler v2.35 (Free license) build 20211206165544 Og1
    530  01B9  0189               	clrf	9	;volatile
    531  01BA                     l1113:
    532                           
-   533                           ;mainL7.c: 84:     OSCCONbits.IRCF = 0b011;
+   533                           ;mainL7.c: 84:     OSCCONbits.IRCF = 0b110;
    534  01BA  1683               	bsf	3,5	;RP0=1, select bank1
    535  01BB  1303               	bcf	3,6	;RP1=0, select bank1
    536  01BC  080F               	movf	15,w	;volatile
    537  01BD  398F               	andlw	-113
-   538  01BE  3830               	iorlw	48
+   538  01BE  3860               	iorlw	96
    539  01BF  008F               	movwf	15	;volatile
    540  01C0                     l1115:
    541                           
@@ -626,8 +626,8 @@ Microchip MPLAB XC8 C Compiler v2.35 (Free license) build 20211206165544 Og1
    612  01DB  0481               	iorwf	1,f	;volatile
    613  01DC                     l1145:
    614                           
-   615                           ;mainL7.c: 102:     TMR0 = 246;
-   616  01DC  30F6               	movlw	246
+   615                           ;mainL7.c: 102:     TMR0 = 236;
+   616  01DC  30EC               	movlw	236
    617  01DD  1283               	bcf	3,5	;RP0=0, select bank0
    618  01DE  1303               	bcf	3,6	;RP1=0, select bank0
    619  01DF  0081               	movwf	1	;volatile
@@ -1740,8 +1740,8 @@ Microchip MPLAB XC8 C Compiler v2.35 (Free license) build 20211206165544 Og1
   1724  0205                     u26_20:
   1725  0205                     i1l935:
   1726                           
-  1727                           ;mainL7.c: 68:         TMR0 = 246;
-  1728  0205  30F6               	movlw	246
+  1727                           ;mainL7.c: 68:         TMR0 = 236;
+  1728  0205  30EC               	movlw	236
   1729  0206  1283               	bcf	3,5	;RP0=0, select bank0
   1730  0207  1303               	bcf	3,6	;RP1=0, select bank0
   1731  0208  0081               	movwf	1	;volatile
@@ -2012,7 +2012,7 @@ DATA                 0      0      1B      12        0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.35 build 20211206165544 
-Symbol Table                                                                                   Mon Apr 04 15:50:28 2022
+Symbol Table                                                                                   Wed Apr 06 17:46:44 2022
 
                      l75 01E9                       l92 0296                       l98 0092  
            ___awdiv@sign 0021            ?_display_7seg 0076                      l101 026F  

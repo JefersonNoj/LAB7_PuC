@@ -34,7 +34,7 @@
 
 #define INC_B PORTBbits.RB0     // Asignar identificador a RB0
 #define DEC_B PORTBbits.RB1     // Asignar identificador a RB1
-#define TMR0_setup 246          // Asignar valor de reinicio para el TMR0 (206 para 100ms)
+#define TMR0_setup 236          // Asignar valor de reinicio para el TMR0
 
 uint8_t valor = 0;
 uint8_t selector = 0;
@@ -81,7 +81,7 @@ void setup(void){
     ANSEL = 0;                  // Configurar I/O digitales
     ANSELH = 0;
     
-    OSCCONbits.IRCF = 0b011;    // FOSC: 500kHz
+    OSCCONbits.IRCF = 0b110;    // FOSC: 4MHz
     OSCCONbits.SCS = 1;         // Oscilador interno
     
     TRISA = 0;                  // PORTA como salida

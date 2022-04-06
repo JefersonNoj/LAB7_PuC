@@ -2864,7 +2864,7 @@ void __attribute__((picinterrupt(("")))) isr (void){
         INTCONbits.RBIF = 0;
     }
     else if (INTCONbits.T0IF){
-        TMR0 = 246;
+        TMR0 = 236;
         INTCONbits.T0IF = 0;
 
         selector++;
@@ -2880,7 +2880,7 @@ void setup(void){
     ANSEL = 0;
     ANSELH = 0;
 
-    OSCCONbits.IRCF = 0b011;
+    OSCCONbits.IRCF = 0b110;
     OSCCONbits.SCS = 1;
 
     TRISA = 0;
@@ -2898,7 +2898,7 @@ void setup(void){
     OPTION_REGbits.T0CS = 0;
     OPTION_REGbits.PSA = 0;
     OPTION_REGbits.PS = 0b111;
-    TMR0 = 246;
+    TMR0 = 236;
 
     INTCONbits.GIE = 1;
     INTCONbits.T0IE = 1;

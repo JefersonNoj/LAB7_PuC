@@ -509,8 +509,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! != -> . . _INTCONbits 0 2 `i -> 0 `i 149  ]
 {
 "68
-[; ;mainL7.c: 68:         TMR0 = 246;
-[e = _TMR0 -> -> 246 `i `uc ]
+[; ;mainL7.c: 68:         TMR0 = 236;
+[e = _TMR0 -> -> 236 `i `uc ]
 "69
 [; ;mainL7.c: 69:         INTCONbits.T0IF = 0;
 [e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
@@ -549,8 +549,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mainL7.c: 82:     ANSELH = 0;
 [e = _ANSELH -> -> 0 `i `uc ]
 "84
-[; ;mainL7.c: 84:     OSCCONbits.IRCF = 0b011;
-[e = . . _OSCCONbits 0 4 -> -> 3 `i `uc ]
+[; ;mainL7.c: 84:     OSCCONbits.IRCF = 0b110;
+[e = . . _OSCCONbits 0 4 -> -> 6 `i `uc ]
 "85
 [; ;mainL7.c: 85:     OSCCONbits.SCS = 1;
 [e = . . _OSCCONbits 0 0 -> -> 1 `i `uc ]
@@ -597,8 +597,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mainL7.c: 101:     OPTION_REGbits.PS = 0b111;
 [e = . . _OPTION_REGbits 0 0 -> -> 7 `i `uc ]
 "102
-[; ;mainL7.c: 102:     TMR0 = 246;
-[e = _TMR0 -> -> 246 `i `uc ]
+[; ;mainL7.c: 102:     TMR0 = 236;
+[e = _TMR0 -> -> 236 `i `uc ]
 "104
 [; ;mainL7.c: 104:     INTCONbits.GIE = 1;
 [e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
