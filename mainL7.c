@@ -150,16 +150,16 @@ void obtener_decimal(uint8_t valor){
     centenas = 0;
     decenas = 0;
     unidades = 0;
-    if (valor >= 100){
-        centenas = valor/100;
+    if (valor >= 100){              // Evaluar si el valor es mayor a 100
+        centenas = valor/100;       // Si lo es, dividir entre 100 y obtener el módulo /residuo)
         valor = valor%100;
     }
-    if (valor >= 10){
-        decenas = valor/10;
-        unidades = valor%10;
+    if (valor >= 10){               // Evaluar si ahora el valor es mayor a 10
+        decenas = valor/10;         // Si lo es, dividir entre 10 y obtener el módulo
+        unidades = valor%10;        // Pasar el módulo a la variable de las unidades
     }
-    if (valor < 10)
-        unidades = valor;
+    if (valor < 10)                 // Evaluar si el valor no es mayor que 100 ni mayor que 10 
+        unidades = valor;           // Si no lo es, guardar dicho valor directamente en la variable de unidades
     return;
 }
 
